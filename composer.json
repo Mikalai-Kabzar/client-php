@@ -1,5 +1,5 @@
 {
-	"name" : "reportportal/report-portal",
+	"name" : "reportportal",
 	"type" : "library",
 	"description" : "Basic classes for Report Portal collaboration",
 	"keywords" : [
