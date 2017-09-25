@@ -21,8 +21,8 @@
 		"symfony/yaml" : "*"
 	},
 	"autoload" : {
-		"psr-4" : {
-			"ReportPortal\\" : "src/"
-		}
-	}
+		"classmap" : [
+			"src/"
+		]
+			}
 }
