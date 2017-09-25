@@ -1,5 +1,5 @@
 {
-	"name" : "reportportal/reportportal",
+	"name" : "reportportal/basic",
 	"type" : "library",
 	"description" : "Basic classes for Report Portal collaboration",
 	"keywords" : [
@@ -18,8 +18,7 @@
 	"require" : {
 		"guzzlehttp/guzzle" : "*",
 		"psr/http-message" : "*",
-		"symfony/yaml" : "*",
-		"php" : "*"
+		"symfony/yaml" : "*"
 	},
 	"autoload" : {
 		"classmap" : [
