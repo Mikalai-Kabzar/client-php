@@ -1,5 +1,5 @@
 <?php
-namespace ReportPortal\Basic\Enum;
+namespace ReportPortalBasic\Enum;
 
 /**
  * Enum describes report portal items' statuses.

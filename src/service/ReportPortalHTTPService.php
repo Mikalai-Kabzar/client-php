@@ -1,5 +1,5 @@
 <?php
-namespace ReportPortal\Basic\Service;
+namespace ReportPortalBasic\Service;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
