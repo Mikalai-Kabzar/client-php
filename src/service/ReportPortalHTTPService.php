@@ -1,9 +1,10 @@
 <?php
+
 namespace ReportPortalBasic\Service;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use ReportPortal\Basic\Enum\ItemStatusesEnum;
+use ReportPortalBasic\Enum\ItemStatusesEnum;
 use Symfony\Component\Yaml\Yaml;
 
 /**
