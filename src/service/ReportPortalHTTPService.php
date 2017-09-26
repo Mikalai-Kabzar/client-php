@@ -91,31 +91,31 @@ class ReportPortalHTTPService
      *
      * @var string
      */
-    protected static $launchID = ReportPortalHTTPService::EMPTY_ID;
+    protected static $launchID = self::EMPTY_ID;
 
     /**
      *
      * @var string
      */
-    protected static $rootItemID = ReportPortalHTTPService::EMPTY_ID;
+    protected static $rootItemID = self::EMPTY_ID;
 
     /**
      *
      * @var string
      */
-    protected static $featureItemID = ReportPortalHTTPService::EMPTY_ID;
+    protected static $featureItemID = self::EMPTY_ID;
 
     /**
      *
      * @var string
      */
-    protected static $scenarioItemID = ReportPortalHTTPService::EMPTY_ID;
+    protected static $scenarioItemID = self::EMPTY_ID;
 
     /**
      *
      * @var string
      */
-    protected static $stepItemID = ReportPortalHTTPService::EMPTY_ID;
+    protected static $stepItemID = self::EMPTY_ID;
 
     /**
      *
@@ -125,8 +125,8 @@ class ReportPortalHTTPService
 
     function __construct()
     {
-        ReportPortalHTTPService::$client = new Client([
-            'base_uri' => ReportPortalHTTPService::$baseURI
+        self::$client = new Client([
+            'base_uri' => self::$baseURI
         ]);
     }
 
@@ -137,7 +137,7 @@ class ReportPortalHTTPService
      */
     public static function isSuiteRunned()
     {
-        return ReportPortalHTTPService::$rootItemID != ReportPortalHTTPService::EMPTY_ID;
+        return self::$rootItemID != self::EMPTY_ID;
     }
 
     /**
@@ -147,7 +147,7 @@ class ReportPortalHTTPService
      */
     public static function isStepRunned()
     {
-        return ReportPortalHTTPService::$stepItemID != ReportPortalHTTPService::EMPTY_ID;
+        return self::$stepItemID != self::EMPTY_ID;
     }
 
     /**
@@ -157,7 +157,7 @@ class ReportPortalHTTPService
      */
     public static function isScenarioRunned()
     {
-        return ReportPortalHTTPService::$scenarioItemID != ReportPortalHTTPService::EMPTY_ID;
+        return self::$scenarioItemID != self::EMPTY_ID;
     }
 
     /**
@@ -167,7 +167,7 @@ class ReportPortalHTTPService
      */
     public static function isFeatureRunned()
     {
-        return ReportPortalHTTPService::$featureItemID != ReportPortalHTTPService::EMPTY_ID;
+        return self::$featureItemID != self::EMPTY_ID;
     }
 
     /**
@@ -179,11 +179,11 @@ class ReportPortalHTTPService
     public static function configureReportPortalHTTPService(string $yamlFilePath)
     {
         $yamlArray = Yaml::parse($yamlFilePath);
-        ReportPortalHTTPService::$UUID = $yamlArray['UUID'];
-        ReportPortalHTTPService::$host = $yamlArray['host'];
-        ReportPortalHTTPService::$baseURI = sprintf(ReportPortalHTTPService::BASE_URI_TEMPLATE, ReportPortalHTTPService::$host);
-        ReportPortalHTTPService::$projectName = $yamlArray['projectName'];
-        ReportPortalHTTPService::$timeZone = $yamlArray['timeZone'];
+        self::$UUID = $yamlArray['UUID'];
+        self::$host = $yamlArray['host'];
+        self::$baseURI = sprintf(self::BASE_URI_TEMPLATE, self::$host);
+        self::$projectName = $yamlArray['projectName'];
+        self::$timeZone = $yamlArray['timeZone'];
     }
 
     /**
@@ -201,20 +201,20 @@ class ReportPortalHTTPService
      */
     public static function launchTestRun(string $name, string $description, string $mode, array $tags)
     {
-        $result = ReportPortalHTTPService::$client->post('v1/' . ReportPortalHTTPService::$projectName . '/launch', array(
+        $result = self::$client->post('v1/' . self::$projectName . '/launch', array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
                 'description' => $description,
                 'mode' => $mode,
                 'name' => $name,
-                'start_time' => ReportPortalHTTPService::getTime(),
+                'start_time' => self::getTime(),
                 'tags' => $tags
             )
         ));
-        ReportPortalHTTPService::$launchID = ReportPortalHTTPService::getValueFromResponse('id', $result);
+        self::$launchID = self::getValueFromResponse('id', $result);
         return $result;
     }
 
@@ -227,13 +227,13 @@ class ReportPortalHTTPService
      */
     public static function finishTestRun(string $runStatus)
     {
-        $result = ReportPortalHTTPService::$client->put('v1/' . ReportPortalHTTPService::$projectName . '/launch/' . ReportPortalHTTPService::$launchID . '/finish', array(
+        $result = self::$client->put('v1/' . self::$projectName . '/launch/' . self::$launchID . '/finish', array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
-                'end_time' => ReportPortalHTTPService::getTime(),
+                'end_time' => self::getTime(),
                 'status' => $runStatus
             )
         ));
@@ -253,21 +253,21 @@ class ReportPortalHTTPService
      */
     public static function createRootItem(string $name, string $description, array $tags)
     {
-        $result = ReportPortalHTTPService::$client->post('v1/' . ReportPortalHTTPService::$projectName . '/item', array(
+        $result = self::$client->post('v1/' . self::$projectName . '/item', array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
                 'description' => $description,
-                'launch_id' => ReportPortalHTTPService::$launchID,
+                'launch_id' => self::$launchID,
                 'name' => $name,
-                'start_time' => ReportPortalHTTPService::getTime(),
+                'start_time' => self::getTime(),
                 "tags" => $tags,
                 "type" => "SUITE"
             )
         ));
-        ReportPortalHTTPService::$rootItemID = ReportPortalHTTPService::getValueFromResponse('id', $result);
+        self::$rootItemID = self::getValueFromResponse('id', $result);
         return $result;
     }
 
@@ -280,8 +280,8 @@ class ReportPortalHTTPService
      */
     public static function finishRootItem(string $resultStatus)
     {
-        $result = ReportPortalHTTPService::finishItem(ReportPortalHTTPService::$rootItemID, ItemStatusesEnum::PASSED, '');
-        ReportPortalHTTPService::$rootItemID = ReportPortalHTTPService::EMPTY_ID;
+        $result = self::finishItem(self::$rootItemID, ItemStatusesEnum::PASSED, '');
+        self::$rootItemID = self::EMPTY_ID;
         return $result;
     }
 
@@ -298,15 +298,15 @@ class ReportPortalHTTPService
      */
     protected static function addLogMessage(string $item_id, string $message, string $logLevel)
     {
-        $result = ReportPortalHTTPService::$client->post('v1/' . ReportPortalHTTPService::$projectName . '/log', array(
+        $result = self::$client->post('v1/' . self::$projectName . '/log', array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
                 'item_id' => $item_id,
                 'message' => $message,
-                'time' => ReportPortalHTTPService::getTime(),
+                'time' => self::getTime(),
                 'level' => $logLevel
             )
         ));
@@ -344,16 +344,16 @@ class ReportPortalHTTPService
      */
     protected static function startChildItem(string $parentItemID, string $description, string $name, string $type, array $tags)
     {
-        $result = ReportPortalHTTPService::$client->post('v1/' . ReportPortalHTTPService::$projectName . '/item/' . $parentItemID, array(
+        $result = self::$client->post('v1/' . self::$projectName . '/item/' . $parentItemID, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
                 'description' => $description,
-                'launch_id' => ReportPortalHTTPService::$launchID,
+                'launch_id' => self::$launchID,
                 'name' => $name,
-                'start_time' => ReportPortalHTTPService::getTime(),
+                'start_time' => self::getTime(),
                 'tags' => $tags,
                 'type' => $type
             )
@@ -374,14 +374,14 @@ class ReportPortalHTTPService
      */
     protected static function finishItem(string $itemID, string $status, string $description)
     {
-        $result = ReportPortalHTTPService::$client->put('v1/' . ReportPortalHTTPService::$projectName . '/item/' . $itemID, array(
+        $result = self::$client->put('v1/' . self::$projectName . '/item/' . $itemID, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . ReportPortalHTTPService::$UUID
+                'Authorization' => 'bearer ' . self::$UUID
             ),
             'json' => array(
                 'description' => $description,
-                'end_time' => ReportPortalHTTPService::getTime(),
+                'end_time' => self::getTime(),
                 'status' => $status
             )
         ));
@@ -395,6 +395,6 @@ class ReportPortalHTTPService
      */
     protected static function getTime()
     {
-        return date(ReportPortalHTTPService::FORMAT_DATE) . ReportPortalHTTPService::$timeZone;
+        return date(self::FORMAT_DATE) . self::$timeZone;
     }
 }
