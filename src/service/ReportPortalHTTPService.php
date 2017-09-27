@@ -315,6 +315,53 @@ class ReportPortalHTTPService
     }
 
     /**
+     * Add log with picture.
+     *
+     * @param string $pictureAsString - picture as string.
+     * @param string $item_id - current step item_id.
+     * @param string $message - message for log.
+     * @param string $logLevel - log level
+     * @param string $pictureContentType - picture content type (png, jpeg, etc.)
+     * @return ResponseInterface - response
+     */
+    public static function addPictureToLogMessage(string $pictureAsString, string $item_id, string $message, string $logLevel, string $pictureContentType)
+    {
+        if (self::isStepRunned()) {
+            $multipart = new MultipartStream([
+                [
+                    'name' => 'json_request_part',
+                    'contents' => json_encode([['file' => ['name' => 'picture'],
+                        'item_id' => $item_id,
+                        'message' => $message,
+                        'time' => self::getTime(),
+                        'level' => $logLevel]]),
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Content-Transfer-Encoding' => '8bit'
+                    ]
+                ],
+                [
+                    'name' => 'binary_part',
+                    'contents' => $pictureAsString,
+                    'filename' => 'picture',
+                    'headers' => [
+                        'Content-Type' => 'image/' . $pictureContentType,
+                        'Content-Transfer-Encoding' => 'binary'
+                    ]
+                ]
+            ]);
+            $request = new Request(
+                'POST',
+                'v1/' . self::$projectName . '/log',
+                [],
+                $multipart
+            );
+            $result = self::$client->send($request);
+            return $result;
+        }
+    }
+
+    /**
      * Get value from response.
      *
      * @param string $lookForRequest
@@ -394,7 +441,7 @@ class ReportPortalHTTPService
      *
      * @return string with local time
      */
-    protected static function getTime()
+    private static function getTime()
     {
         return date(self::FORMAT_DATE) . self::$timeZone;
     }
