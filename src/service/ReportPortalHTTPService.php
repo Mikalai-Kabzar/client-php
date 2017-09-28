@@ -275,11 +275,9 @@ class ReportPortalHTTPService
     /**
      * Finish root item
      *
-     * @param string $resultStatus
-     *            - result of root item
      * @return ResponseInterface - result of request
      */
-    public static function finishRootItem(string $resultStatus)
+    public static function finishRootItem()
     {
         $result = self::finishItem(self::$rootItemID, ItemStatusesEnum::PASSED, '');
         self::$rootItemID = self::EMPTY_ID;
