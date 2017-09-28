@@ -127,7 +127,10 @@ class ReportPortalHTTPService
     function __construct()
     {
         self::$client = new Client([
-            'base_uri' => self::$baseURI
+            'base_uri' => self::$baseURI,
+            'headers' => [
+                'Authorization' => 'bearer ' . self::$UUID
+            ]
         ]);
     }
 
@@ -204,8 +207,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->post('v1/' . self::$projectName . '/launch', array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'description' => $description,
@@ -230,8 +232,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->put('v1/' . self::$projectName . '/launch/' . self::$launchID . '/finish', array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'end_time' => self::getTime(),
@@ -256,8 +257,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->post('v1/' . self::$projectName . '/item', array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'description' => $description,
@@ -301,8 +301,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->post('v1/' . self::$projectName . '/log', array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'item_id' => $item_id,
@@ -394,8 +393,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->post('v1/' . self::$projectName . '/item/' . $parentItemID, array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'description' => $description,
@@ -424,8 +422,7 @@ class ReportPortalHTTPService
     {
         $result = self::$client->put('v1/' . self::$projectName . '/item/' . $itemID, array(
             'headers' => array(
-                'Content-Type' => 'application/json',
-                'Authorization' => 'bearer ' . self::$UUID
+                'Content-Type' => 'application/json'
             ),
             'json' => array(
                 'description' => $description,
