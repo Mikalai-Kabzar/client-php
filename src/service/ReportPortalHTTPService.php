@@ -316,14 +316,15 @@ class ReportPortalHTTPService
     /**
      * Add log with picture.
      *
-     * @param string $pictureAsString - picture as string.
-     * @param string $item_id - current step item_id.
-     * @param string $message - message for log.
+     * @param string $item_id - current step item_id
+     * @param string $message - message for log
      * @param string $logLevel - log level
+     * @param string $pictureAsString - picture as string
      * @param string $pictureContentType - picture content type (png, jpeg, etc.)
+     *
      * @return ResponseInterface - response
      */
-    public static function addPictureToLogMessage(string $pictureAsString, string $item_id, string $message, string $logLevel, string $pictureContentType)
+    public static function addLogMessageWithPicture(string $item_id, string $message, string $logLevel, string $pictureAsString, string $pictureContentType)
     {
         if (self::isStepRunned()) {
             $multipart = new MultipartStream([
