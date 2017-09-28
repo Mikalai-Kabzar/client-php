@@ -438,7 +438,7 @@ class ReportPortalHTTPService
      *
      * @return string with local time
      */
-    private static function getTime()
+    protected static function getTime()
     {
         return date(self::FORMAT_DATE) . self::$timeZone;
     }
