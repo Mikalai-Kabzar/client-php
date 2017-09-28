@@ -3,6 +3,8 @@
 namespace ReportPortalBasic\Service;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use ReportPortalBasic\Enum\ItemStatusesEnum;
 use Symfony\Component\Yaml\Yaml;
