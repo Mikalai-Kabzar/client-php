@@ -120,6 +120,18 @@ class ReportPortalHTTPService
      */
     protected static $stepItemID = self::EMPTY_ID;
 
+     /**
+     *
+     * @var string
+     */
+    protected static $stepItemID = self::EMPTY_ID;
+     
+    /**
+     *
+     * @var boolean
+     */
+    private static $isHTTPErrorsAllowed = true;
+    
     /**
      *
      * @var \GuzzleHttp\Client
@@ -130,12 +142,21 @@ class ReportPortalHTTPService
     {
         self::$client = new Client([
             'base_uri' => self::$baseURI,
+            'http_errors' => self::$isHTTPErrorsAllowed,
             'headers' => [
                 'Authorization' => 'bearer ' . self::$UUID
             ]
         ]);
     }
-
+    
+    /**
+     * @param bool $isHTTPErrorsAllowed
+     */
+    public static function setIsHTTPErrorsAllowed(bool $isHTTPErrorsAllowed)
+    {
+        self::$isHTTPErrorsAllowed = $isHTTPErrorsAllowed;
+    }
+    
     /**
      * Check if any suite has running status
      *
