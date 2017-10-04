@@ -22,43 +22,43 @@ class ReportPortalHTTPService
      *
      * @var string
      */
-    public const DAFAULT_LAUNCH_MODE = 'DEFAULT';
+    const DAFAULT_LAUNCH_MODE = 'DEFAULT';
 
     /**
      *
      * @var string
      */
-    protected const EMPTY_ID = 'empty id';
+    const EMPTY_ID = 'empty id';
 
     /**
      *
      * @var string
      */
-    protected const DEFAULT_FEATURE_DESCRIPTION = '';
+    const DEFAULT_FEATURE_DESCRIPTION = '';
 
     /**
      *
      * @var string
      */
-    protected const DEFAULT_SCENARIO_DESCRIPTION = '';
+    const DEFAULT_SCENARIO_DESCRIPTION = '';
 
     /**
      *
      * @var string
      */
-    protected const DEFAULT_STEP_DESCRIPTION = '';
+    const DEFAULT_STEP_DESCRIPTION = '';
 
     /**
      *
      * @var string
      */
-    protected const FORMAT_DATE = 'Y-m-d\TH:i:s';
+    const FORMAT_DATE = 'Y-m-d\TH:i:s';
 
     /**
      *
      * @var string
      */
-    protected const BASE_URI_TEMPLATE = '%s/api/';
+    const BASE_URI_TEMPLATE = '%s/api/';
 
     /**
      *
