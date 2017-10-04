@@ -119,12 +119,6 @@ class ReportPortalHTTPService
      * @var string
      */
     protected static $stepItemID = self::EMPTY_ID;
-
-     /**
-     *
-     * @var string
-     */
-    protected static $stepItemID = self::EMPTY_ID;
      
     /**
      *
