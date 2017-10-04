@@ -58,7 +58,7 @@ class ReportPortalHTTPService
      *
      * @var string
      */
-    protected const BASE_URI_TEMPLATE = 'http://%s/api/';
+    protected const BASE_URI_TEMPLATE = '%s/api/';
 
     /**
      *
