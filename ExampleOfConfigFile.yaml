@@ -1,4 +1,4 @@
 UUID: c7e8a5dc-9196-48f0-bfc8-e16c75d64979
-host: localhost:8080
+host: http://localhost:8080
 projectName: default_personal
 timeZone: .000+02:00
