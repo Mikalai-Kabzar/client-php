@@ -137,6 +137,7 @@ class ReportPortalHTTPService
         self::$client = new Client([
             'base_uri' => self::$baseURI,
             'http_errors' => self::$isHTTPErrorsAllowed,
+            'verify' => false,
             'headers' => [
                 'Authorization' => 'bearer ' . self::$UUID
             ]
