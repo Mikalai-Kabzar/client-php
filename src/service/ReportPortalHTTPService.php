@@ -148,7 +148,6 @@ class ReportPortalHTTPService
     {
         self::$client = new Client([
             'base_uri' => self::$baseURI,
-            //'http_errors' => self::$isHTTPErrorsAllowed,
             'http_errors' => false,
             'verify' => false,
             'headers' => [
