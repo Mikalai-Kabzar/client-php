@@ -22,6 +22,18 @@ class ReportPortalHTTPService
      *
      * @var string
      */
+    const ERROR_FINISH_LAUNCH = 'Finish launch is not allowed.';
+
+    /**
+     *
+     * @var string
+     */
+    const ERROR_FINISH_TEST_ITEM = 'Finish test item is not allowed.';
+
+    /**
+     *
+     * @var string
+     */
     const DAFAULT_LAUNCH_MODE = 'DEFAULT';
 
     /**
@@ -119,13 +131,13 @@ class ReportPortalHTTPService
      * @var string
      */
     protected static $stepItemID = self::EMPTY_ID;
-     
+
     /**
      *
      * @var boolean
      */
     private static $isHTTPErrorsAllowed = true;
-    
+
     /**
      *
      * @var \GuzzleHttp\Client
@@ -136,14 +148,15 @@ class ReportPortalHTTPService
     {
         self::$client = new Client([
             'base_uri' => self::$baseURI,
-            'http_errors' => self::$isHTTPErrorsAllowed,
+            //'http_errors' => self::$isHTTPErrorsAllowed,
+            'http_errors' => false,
             'verify' => false,
             'headers' => [
                 'Authorization' => 'bearer ' . self::$UUID
             ]
         ]);
     }
-    
+
     /**
      * @param bool $isHTTPErrorsAllowed
      */
@@ -151,7 +164,7 @@ class ReportPortalHTTPService
     {
         self::$isHTTPErrorsAllowed = $isHTTPErrorsAllowed;
     }
-    
+
     /**
      * Check if any suite has running status
      *
@@ -378,6 +391,32 @@ class ReportPortalHTTPService
     }
 
     /**
+     * Finish item by id
+     *
+     * @param string $itemID
+     *            - test item ID
+     * @param string $status
+     *            - status of test item
+     * @param string $description
+     *            - description of test item
+     * @return ResponseInterface - result of request
+     */
+    protected static function finishItem(string $itemID, string $status, string $description)
+    {
+        $result = self::$client->put('v1/' . self::$projectName . '/item/' . $itemID, array(
+            'headers' => array(
+                'Content-Type' => 'application/json'
+            ),
+            'json' => array(
+                'description' => $description,
+                'end_time' => self::getTime(),
+                'status' => $status
+            )
+        ));
+        return $result;
+    }
+
+    /**
      * Get value from response.
      *
      * @param string $lookForRequest
@@ -425,32 +464,6 @@ class ReportPortalHTTPService
     }
 
     /**
-     * Finish item by id
-     *
-     * @param string $itemID
-     *            - test item ID
-     * @param string $status
-     *            - status of test item
-     * @param string $description
-     *            - description of test item
-     * @return ResponseInterface - result of request
-     */
-    protected static function finishItem(string $itemID, string $status, string $description)
-    {
-        $result = self::$client->put('v1/' . self::$projectName . '/item/' . $itemID, array(
-            'headers' => array(
-                'Content-Type' => 'application/json'
-            ),
-            'json' => array(
-                'description' => $description,
-                'end_time' => self::getTime(),
-                'status' => $status
-            )
-        ));
-        return $result;
-    }
-
-    /**
      * Get local time
      *
      * @return string with local time
@@ -458,5 +471,29 @@ class ReportPortalHTTPService
     protected static function getTime()
     {
         return date(self::FORMAT_DATE) . self::$timeZone;
+    }
+
+    /**
+     * Force finish items
+     *
+     * @param $result
+     *            - response of request with result
+     *
+     * @return true if there is no errors
+     */
+    public static function finishAll($result)
+    {
+        $status = true;
+        $body = $result->getBody();
+        $array = json_decode($body->getContents());
+        if ((strpos($body, self::ERROR_FINISH_LAUNCH) > -1) or (strpos($body, self::ERROR_FINISH_TEST_ITEM) > -1)) {
+            $message = $array->{'message'};
+            $items = mb_split(',', explode(']', explode('[', $message)[1])[0]);
+            foreach ($items as $itemID) {
+                self::finishItem($itemID, ItemStatusesEnum::CANCELLED, 'Cancelled due to error.');
+            }
+            $status = false;
+        }
+        return $status;
     }
 }
