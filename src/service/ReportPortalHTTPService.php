@@ -155,7 +155,39 @@ class ReportPortalHTTPService
             ]
         ]);
     }
+    
+    /**
+     * @param string $timeZone
+     */
+    public static function setTimeZone(string $timeZone)
+    {
+        self::$timeZone = $timeZone;
+    }
 
+    /**
+     * @param string $UUID
+     */
+    public static function setUUID(string $UUID)
+    {
+        self::$UUID = $UUID;
+    }
+
+    /**
+     * @param string $baseURI
+     */
+    public static function setBaseURI(string $baseURI)
+    {
+        self::$baseURI = $baseURI;
+    }
+
+    /**
+     * @param string $host
+     */
+    public static function setHost(string $host)
+    {
+        self::$host = $host;
+    }
+    
     /**
      * @param bool $isHTTPErrorsAllowed
      */
@@ -173,7 +205,23 @@ class ReportPortalHTTPService
     {
         return self::$rootItemID != self::EMPTY_ID;
     }
-
+    
+    /**
+     * @param string $UUID
+     * @param string $baseURI
+     * @param string $host
+     * @param string $timeZone
+     * @param bool $isHTTPErrorsAllowed
+     */
+    public static function configureClient(string $UUID, string $baseURI, string $host, string $timeZone, bool $isHTTPErrorsAllowed)
+    {
+        self::$UUID = $UUID;
+        self::$baseURI = $baseURI;
+        self::$host = $host;
+        self::$timeZone = $timeZone;
+        self::$isHTTPErrorsAllowed = $isHTTPErrorsAllowed;
+    }
+    
     /**
      * Check if any step has running status
      *
