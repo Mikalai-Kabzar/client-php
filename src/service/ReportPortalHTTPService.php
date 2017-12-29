@@ -34,7 +34,7 @@ class ReportPortalHTTPService
      *
      * @var string
      */
-    const DAFAULT_LAUNCH_MODE = 'DEFAULT';
+    const DEFAULT_LAUNCH_MODE = 'DEFAULT';
 
     /**
      *
