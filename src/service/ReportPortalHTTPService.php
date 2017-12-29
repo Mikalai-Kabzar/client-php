@@ -211,14 +211,16 @@ class ReportPortalHTTPService
      * @param string $baseURI
      * @param string $host
      * @param string $timeZone
+     * @param string $projectName
      * @param bool $isHTTPErrorsAllowed
      */
-    public static function configureClient(string $UUID, string $baseURI, string $host, string $timeZone, bool $isHTTPErrorsAllowed)
+    public static function configureClient(string $UUID, string $baseURI, string $host, string $timeZone, string $projectName, bool $isHTTPErrorsAllowed)
     {
         self::$UUID = $UUID;
         self::$baseURI = $baseURI;
         self::$host = $host;
         self::$timeZone = $timeZone;
+        self::$projectName = $projectName;
         self::$isHTTPErrorsAllowed = $isHTTPErrorsAllowed;
     }
     
