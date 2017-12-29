@@ -375,7 +375,7 @@ class ReportPortalHTTPService
      *            - log level of log message
      * @return ResponseInterface - result of request
      */
-    protected static function addLogMessage(string $item_id, string $message, string $logLevel)
+    public static function addLogMessage(string $item_id, string $message, string $logLevel)
     {
         $result = self::$client->post('v1/' . self::$projectName . '/log', array(
             'headers' => array(
@@ -450,7 +450,7 @@ class ReportPortalHTTPService
      *            - description of test item
      * @return ResponseInterface - result of request
      */
-    protected static function finishItem(string $itemID, string $status, string $description)
+    public static function finishItem(string $itemID, string $status, string $description)
     {
         $result = self::$client->put('v1/' . self::$projectName . '/item/' . $itemID, array(
             'headers' => array(
@@ -473,7 +473,7 @@ class ReportPortalHTTPService
      * @param ResponseInterface $response
      * @return string value by $lookForRequest.
      */
-    protected static function getValueFromResponse(string $lookForRequest, ResponseInterface $response)
+    public static function getValueFromResponse(string $lookForRequest, ResponseInterface $response)
     {
         $array = json_decode($response->getBody()->getContents());
         return $array->{$lookForRequest};
@@ -494,7 +494,7 @@ class ReportPortalHTTPService
      *            - array with tags
      * @return ResponseInterface - result of request
      */
-    protected static function startChildItem(string $parentItemID, string $description, string $name, string $type, array $tags)
+    public static function startChildItem(string $parentItemID, string $description, string $name, string $type, array $tags)
     {
         $result = self::$client->post('v1/' . self::$projectName . '/item/' . $parentItemID, array(
             'headers' => array(
