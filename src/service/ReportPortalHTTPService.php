@@ -207,6 +207,30 @@ class ReportPortalHTTPService
     }
     
     /**
+     * @return string
+     */
+    public static function getStepItemID(): string
+    {
+        return self::$stepItemID;
+    }
+
+    /**
+     * @param string $stepItemID
+     */
+    public static function setStepItemID(string $stepItemID)
+    {
+        self::$stepItemID = $stepItemID;
+    }
+
+    /**
+     * Set Step Item to empty value
+     */
+    public static function setStepItemIDToEmpty()
+    {
+        self::$stepItemID = self::EMPTY_ID;
+    }
+    
+    /**
      * @param string $UUID
      * @param string $baseURI
      * @param string $host
