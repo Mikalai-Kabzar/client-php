@@ -345,7 +345,29 @@ class ReportPortalHTTPService
         ));
         return $result;
     }
-
+    
+    /**
+     * Force finish test run
+     *
+     * @param string $runStatus
+     *            - status of test run
+     * @return ResponseInterface - result of request
+     */
+    public static function forceFinishTestRun(string $description, string $runStatus)
+    {
+        $result = self::$client->put('v1/' . self::$projectName . '/launch/' . self::$launchID . '/stop', array(
+            'headers' => array(
+                'Content-Type' => 'application/json'
+            ),
+            'json' => array(
+                'description' => $description,
+                'end_time' => self::getTime(),
+                'status' => $runStatus
+            )
+        ));
+        return $result;
+    }
+    
     /**
      * Create root item
      *
