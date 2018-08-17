@@ -1,5 +1,5 @@
 {
-	"name" : "reportportal/basic",
+	"name" : "client-php",
 	"type" : "library",
 	"description" : "Basic classes for Report Portal collaboration",
 	"keywords" : [
