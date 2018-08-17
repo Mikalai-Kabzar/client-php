@@ -1,5 +1,5 @@
 {
-	"name" : "mkabzar/base",
+	"name" : "reportportal/base",
 	"type" : "library",
 	"description" : "Basic classes for Report Portal collaboration",
 	"keywords" : [
