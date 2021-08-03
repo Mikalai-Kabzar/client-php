@@ -598,7 +598,7 @@ class ReportPortalHTTPService
         $array = json_decode($body->getContents());
         if ((strpos($body, self::ERROR_FINISH_LAUNCH) > -1) or (strpos($body, self::ERROR_FINISH_TEST_ITEM) > -1)) {
             $message = $array->{'message'};
-            if (count($message) > 1) {
+            if (is_array($message) && (count($message) > 1)) {
                 $items = mb_split(',', explode(']', explode('[', $message)[1])[0]);
                 foreach ($items as $itemID) {
                     self::finishItem($itemID, ItemStatusesEnum::CANCELLED, 'Cancelled due to error.');
