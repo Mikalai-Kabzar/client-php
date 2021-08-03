@@ -1,5 +1,5 @@
 {
-	"name" : "sunshine69/reportportal/basic",
+	"name" : "reportportal/base",
 	"type" : "library",
 	"description" : "Basic classes for Report Portal collaboration",
 	"keywords" : [
