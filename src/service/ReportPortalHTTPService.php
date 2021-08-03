@@ -155,7 +155,7 @@ class ReportPortalHTTPService
             ]
         ]);
     }
-    
+
     /**
      * @param string $timeZone
      */
@@ -173,6 +173,22 @@ class ReportPortalHTTPService
     }
 
     /**
+     * @param string $launchID
+     */
+    public static function setLaunchID(string $launchID)
+    {
+        self::$launchID = $launchID;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLaunchID(): string
+    {
+        return self::$launchID;
+    }
+
+    /**
      * @param string $baseURI
      */
     public static function setBaseURI(string $baseURI)
@@ -187,7 +203,7 @@ class ReportPortalHTTPService
     {
         self::$host = $host;
     }
-    
+
     /**
      * @param bool $isHTTPErrorsAllowed
      */
@@ -205,7 +221,7 @@ class ReportPortalHTTPService
     {
         return self::$rootItemID != self::EMPTY_ID;
     }
-    
+
     /**
      * @return string
      */
@@ -229,7 +245,7 @@ class ReportPortalHTTPService
     {
         self::$stepItemID = self::EMPTY_ID;
     }
-    
+
     /**
      * @param string $UUID
      * @param string $baseURI
@@ -247,7 +263,7 @@ class ReportPortalHTTPService
         self::$projectName = $projectName;
         self::$isHTTPErrorsAllowed = $isHTTPErrorsAllowed;
     }
-    
+
     /**
      * Check if any step has running status
      *
@@ -345,7 +361,7 @@ class ReportPortalHTTPService
         ));
         return $result;
     }
-    
+
     /**
      * Force finish test run
      *
@@ -366,7 +382,7 @@ class ReportPortalHTTPService
         ));
         return $result;
     }
-    
+
     /**
      * Create root item
      *
@@ -402,9 +418,9 @@ class ReportPortalHTTPService
      *
      * @return ResponseInterface - result of request
      */
-    public static function finishRootItem()
+    public static function finishRootItem(string $description='')
     {
-        $result = self::finishItem(self::$rootItemID, ItemStatusesEnum::PASSED, '');
+        $result = self::finishItem(self::$rootItemID, ItemStatusesEnum::PASSED, $description);
         self::$rootItemID = self::EMPTY_ID;
         return $result;
     }
